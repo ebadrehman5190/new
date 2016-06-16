@@ -9,21 +9,52 @@ Sign up form
 </head>
 <body>
     
+<script type="text/javascript">
+function revalidate()
+{
+	
+	var validate= true;
+	var str=document.getElementById("email").value;
+	var alpha=document.getElementById("fullname").value;
+	var letters = /^[A-Za-z]+$/;  
+	var filter=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	
+			if(document.getElementById("cpwd").value == ""){
+				document.getElementById("var_cpwd").innerHTML="please enter the Confirm Password";
+				validate = false;
+			}else if(document.getElementById("pwd").value != document.getElementById("cpwd").value){
+				document.getElementById("var_cpwd").innerHTML="Password must be same";
+				validate = false;
+			}else{
+				document.getElementById("var_cpwd").innerHTML="";
+			}
+			
+			if(validate == false){
+				return(false);
+			}else{
+				return(true);
+			}
+}		
+		
+</script>
+
+			
+	
 <?php    
-$user=$fullname=$email=$pwd=$cpwd=$country=$birthday=$gender=$admin=$message="";
+$user=$fullname=$email=$pwd=$country=$birthday=$gender=$admin=$message="";
 ?>    
 
-<a href="login1.php">back</a>    
+<a href="login1.php">Back</a>    
     <form name="Registration" class="form_title" action="" method="POST" onSubmit="return revalidate()">
 	<fieldset class="field_set">
 	<legend><h1>Sign up form</h1></legend>
 		<table>
 			<tr>
-                <td>User:</td>
+                <td>Username:</td>
                 <td><input type="text" name="user" id="user"></td>
             </tr>
             <tr>
-                <td>Name:</td>
+                <td>FullName:</td>
                 <td><input type="text" name="name" id="name"></td>
             </tr>
              <tr>
@@ -70,8 +101,8 @@ $user=$fullname=$email=$pwd=$cpwd=$country=$birthday=$gender=$admin=$message="";
 
 				//$select = mysqli_select_db('test');
 				mysqli_select_db($conn,"test");
-				$new = "INSERT INTO selected_members (User, Member_name, Email, Password, ConfirmPassword, Gender, Admin)
-				VALUES ('".$_POST['user']."','".$_POST['name']."', '".$_POST['email']."', '".$_POST['password']."', '".$_POST['cpassword']."', '".$_POST['gender']."', '".$_POST['admin']."')";
+				$new = "INSERT INTO selected_members (User, Member_name, Email, Password, Gender, Admin)
+				VALUES ('".$_POST['user']."','".$_POST['name']."', '".$_POST['email']."', '".$_POST['password']."', '".$_POST['gender']."', '".$_POST['admin']."')";
 
 				if ($conn->query($new) === TRUE) {
 					echo "New record created successfully";

@@ -6,32 +6,24 @@ include('session1.php');
 <html>
 <head>
 
-<style>
-
-	.field_set{
-	 background-color:white;
-	 border:solid;
-	 text-align:center;
-	 margin-left:10px; 
-	 margin-top:0px;
-     width:80%;
-	 }
-	 
-</style>	 
+<title>data</title>
 
 </head>
 
 <body>
+    <a href="Entry.php">Home</a>	
+	<input name="logout" type="button" id="logout" value="logout" style="margin-left:860px;" onclick="window.location='logout1.php'" >
+<br><br>    
+
 <form action='#' method="post">
 	
-
 <?php
 		
 		$conn = mysqli_connect('localhost','root','','test');
 		mysqli_select_db($conn,"test");
 
-		$query = "SELECT date,members,items,paid,amount,per_head FROM system ";
-		$amount = "SELECT SUM(amount),SUM(per_head) FROM system ";
+		$query = "SELECT date,members,items,paid,amount,per_head FROM Lunch_system ";
+		$amount = "SELECT SUM(amount),SUM(per_head) FROM Lunch_system ";
 			
 		$result = mysqli_query($conn,$query);
 		$sum = mysqli_query($conn,$amount);
@@ -57,24 +49,10 @@ echo '<table border="2">';
 		echo '<td>' . $row['per_head'] . '</td>';
 	echo '</tr>';
         }
-    echo '<tr>';
-        echo '<td><b>Total</b></td>';
-        echo '<td></td>';
-        echo '<td></td>';
-        echo '<td></td>';
-        echo '<td><b>' . $total['SUM(amount)'] .'</b></td>';
-//        echo '<td>' . $total['SUM(per_head)'] .'</td>';
-    echo '</tr>';
 echo '</table>';
 		?>
         
 		</form>
-
-<br><br>
-        <a href="Entry.php">Entry</a>	    
-<br><br>
-	<input name="logout" type="button" id="logout" value="logout" onclick="window.location='logout1.php'" >
- 	
 		
 </body>
 </html>        

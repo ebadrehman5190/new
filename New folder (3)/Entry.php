@@ -4,46 +4,12 @@ include('session1.php');
 
 <!doctype html>
 <html>
-<head>
-    
-    <title>Entry</title>
-
-    
-    <style>
-     .align{
-            margin-left:10px;
-           }
-        
-        	 
-	body {
-	background-image: url("images/images.jpg");
-    background-size: 1280px 710px;
-    background-repeat: no-repeat;    
-	}
-    </style>    
+<head>    
+    <title>Entry</title>    
+    <link rel="stylesheet" href="styles.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-    var max_fields      = 10; //maximum input boxes allowed
-    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
-    
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-        }
-    });
-    
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
-    })
-});
-</script>
+    <script src="http://localhost/php/newtask/addbutton_jquery.js"></script>
 
 <script type="text/javascript">
     function myFunction(value) { 
@@ -60,174 +26,183 @@ include('session1.php');
 </script>
 
 </head>        
-<body>
-    
+    <body>         
+    <script src="http://localhost/php/newtask/java_validation.js"></script>
+        
+        
+<div class="menu">
+    <div class="history">    
+        <a href="data.php">History</a> &nbsp;  
+        <a href="member_data.php">Member History</a> &nbsp;
+        <a href="Payment_details.php">Payment Page</a>
+        <input name="logout" type="button" id="logout" value="logout" style="margin-left:925px;margin-top:5px;" onclick="window.location='logout1.php'" >
+        </div>  
 <?php
 
-$date=$member=$items=$paid=$amount=$per_head="";
+$dateErr=$memberErr=$mytextErr=$paidErr=$amountErr="";
+$date=$member=$mytext=$paid=$amount="";
 
-        if (empty($_POST["date"])){
-			$date="";
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+		if (empty($_POST["date"])){
+			$dateErr="date required";
 		} else {
 			$date = test_input($_POST["date"]);
 		}
         
-        if (empty($_POST["member"])){
-			$member="";
+		if (empty($_POST["member"])){
+			$memberErr="member required";
 		} else {
 			$member = test_input($_POST["member"]);
 		}
         
         if (empty($_POST["mytext"])){
-			$items="";
+			$mytextErr="items required";
 		} else {
-			$items = test_input($_POST["mytext"]);
+			$mytext = test_input($_POST["mytext"]);
 		}
         
         if (empty($_POST["paid"])){
-			$paid="";
+			$paidErr="select member ";
 		} else {
 			$paid = test_input($_POST["paid"]);
 		}
         
         if (empty($_POST["amount"])){
-			$amount="";
+			$amountErr="amount required";
 		} else {
 			$amount = test_input($_POST["amount"]);
 		}
-        
-        if (empty($_POST["per_head"])){
-			$per_head="";
-		} else {
-			$per_head = test_input($_POST["per_head"]);
-		}
-        
+	}
 function test_input($data) {
 	
-}        
+}
+
+?>            
+    <form action="" method="POST" onSubmit="return revalidate()" >
+
+    <div class="main">
         
-?>        
+        Date:
+        <div class="align">
+            <input type="date" name="date" id="date">
+            <span id="var_date" style="color:red;"><?php echo $dateErr;?></span>
+            </div>
 
-<form method="POST" onSubmit="return revalidate()" >
+        <br>
 
-Date:
-<div class="align">
-<input type="date" name="date" id="date">
-</div>
+        Members:
+        <div class="align">
+                    <select multiple="multiple" name="member[]" id="mSelect" size="3" style="width:120px;">
+                            <?php
+                        
+                                $conn = mysqli_connect('localhost','root','','test');
+                                mysqli_select_db($conn,"test");
 
-<br><br>
+                                $edit = "SELECT User FROM selected_members ";				
+                                    
+                                $result = mysqli_query($conn,$edit);
+                                                                
+                                while($row = mysqli_fetch_array($result)) {
+                                ?>
+                        <option value="<?php echo $row["User"] ;  ?>">
+                            <?php echo $row["User"] ;  ?>
+                        </option>
+                        <?php } ?>
+                    </select>
+            </div>
+            <span id="var_mSelect" style="color:red;"><?php echo $memberErr;?></span>
 
-Members:
-<div class="align">
-            <select multiple="multiple" name="member[]" id="mSelect" size="3">
-                <option>select members</option>
-                <?php
-		
-                $conn = mysqli_connect('localhost','root','','test');
-                mysqli_select_db($conn,"test");
+        <br>
+        Items:  
+            <div class="align">
+                <div class="input_fields_wrap">   
+                    <div>
+                        <div>
+                            <input type="text" name="mytext[]" id="mytext">
+                            <button class="add_field_button">Add More</button>
+                        </div>  
+                    </div> 
+                </div>
+            </div>
+        <span id="var_mytext" style="color:red;"><?php echo $mytextErr;?></span>
 
-				$edit = "SELECT User FROM selected_members ";				
-					
-	        	$result = mysqli_query($conn,$edit);
-                                                
-                 while($row = mysqli_fetch_array($result)) {
-                     ?>
-                     <option>
-                     <?php echo $row["User"] ; } ?>
-                    </option>
-            </select>
-    </div>
+        <br>
 
-<br><br>
-
-       Items:  
-         <div class="align">
-<div class="input_fields_wrap">   
-    <div>
-         <div>
-            <input type="text" name="mytext[]" id="mytext[]">
-            <button class="add_field_button">Add More</button>
-         </div>  
-         </div> 
-    </div>
-</div>
-
-<br><br>
-
-Paid money:
-<div class="align">
+        Paid money:
+        <div class="align">
             <select name="paid" id="paid">
-                <option>select member</option>
-    <?php
-                $conn = mysqli_connect('localhost','root','','test');
-                mysqli_select_db($conn,"test");
+                <option></option>
+                <?php
+                        $conn = mysqli_connect('localhost','root','','test');
+                        mysqli_select_db($conn,"test");
 
-				$edit = "SELECT User FROM selected_members ";				
-					
-	        	$result = mysqli_query($conn,$edit);
-                 while($row = mysqli_fetch_array($result)) {
-    ?>
-                <option><?php echo $row["User"] ; } ?></option>  
-            </select>
-</div>
-<br><br>
-
-Total amount:<div class="align">
-<input type="number" name="amount" id="amount" class="countOne" onkeyup="myFunction(this.value)">
-</div>
-                        
-<br><br>
-
-Perhead: 
-<div class="align">
-<input type="text" name="per_head" id="resultHere">
-</div>
-                        
-<br><br>
-    <input type="submit" value="submit">
-    
-<br><br>
-        <a href="data.php">Data</a>
-    
-<br><br>
-	<input name="logout" type="button" id="logout" value="logout" onclick="window.location='logout1.php'" >
-    
-    
-<?php
-            if($_POST){
-                
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "test";
-
-                    // Create connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    } 
-                    
-
-
-            $items=implode(',',$_POST['mytext']);
-            $select=implode(',',$_POST['member']);
-
-                    
-            mysqli_select_db($conn,"test");
-				$new = "INSERT INTO system (date, members, items, paid, amount, per_head)
-				VALUES ('".$_POST['date']."', '".$select."', '".$items."', '".$_POST['paid']."', '".$_POST['amount']."', '".$_POST['per_head']."' )";
-                
-                if ($conn->query($new) === TRUE) {
-					echo "New record created in system";
-				}
+                        $edit = "SELECT User FROM selected_members ";				
                                 
-		$conn->close();
+                        $result = mysqli_query($conn,$edit);
+                        while($row = mysqli_fetch_array($result)) {
+                    ?>
+                    <option><?php echo $row["User"] ; } ?></option>  
+                </select>
+            </div>
+        <span id="var_paid" style="color:red;"><?php echo $paidErr;?></span>
 
-		}
-?>
+        <br>
+        Total amount:
+        <div class="align">
+            <input type="number" name="amount" id="amount" class="countOne" onkeyup="myFunction(this.value)">
+            </div>
+        <span id="var_amount" style="color:red;"><?php echo $amountErr;?></span>
+                                
+        <br>
 
-    </form>
+        Perhead: 
+            <div class="align">
+                <input type="text" name="per_head" id="resultHere" readonly>
+                </div>
+                                    
+                <br><br>
+                <input type="submit" value="submit">    
+                </div>
+
+    
+        
+        
+    <?php
+                if($_POST){
+                    
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "test";
+
+                        // Create connection
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+                        // Check connection
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        } 
+                        
+                $items=implode(',',$_POST['mytext']);
+                $select=implode(',',$_POST['member']);
+                        
+                mysqli_select_db($conn,"test");
+                    $new = "INSERT INTO Lunch_system (date, members, items, paid, amount, per_head)
+                    VALUES ('".$_POST['date']."', '".$select."', '".$items."', '".$_POST['paid']."', '".$_POST['amount']."', '".$_POST['per_head']."' )";
+                    
+                    if ($conn->query($new) === TRUE) {
+                        echo "New record created in system";
+                    } else {
+					echo "Error: " . $new . "<br>" . $conn->error;
+				}
+                                    
+            $conn->close();
+            }
+    ?>
+
+        </form>
+	 </div>
 
 </body>
 </html>                               

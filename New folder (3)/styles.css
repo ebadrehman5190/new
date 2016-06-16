@@ -1,0 +1,36 @@
+    .menu{
+        border:solid;
+        width:1260px;
+        height:685px;
+    }
+    .main{
+        margin-left:8px;
+        margin-top:20px;
+        width:500px;
+    }    
+    .align{
+           margin-left:15px;
+    }     
+    .history{
+        margin-left:5px;
+        text-align:left;
+    }       	 
+	body {
+	background-image: url("images/images.jpg");
+    background-size: 1280px 710px;
+    background-repeat: no-repeat;    
+	}
+    .error {
+    color: #FF0000;
+    }
+	.field_set{
+	 background-color:white;
+	 border:solid;
+	 width:350px;
+	 height:200px;
+	 text-align:center;
+	 margin-left:850px; 
+	 margin-top:50px;
+	 }
+	 
+	 

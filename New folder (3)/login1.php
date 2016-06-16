@@ -10,26 +10,15 @@ header("location: Entry.php");
 <html>
 <head>
 
-<title>Login Page</title>
-<style>
-	.error {color: #FF0000;}
-	
-	 .field_set{
-	 background-color:white;
-	 border:solid;
-	 width:350px;
-	 height:200px;
-	 text-align:center;
-	 margin-left:850px; 
-	 margin-top:50px;
-	 }
-	 
-	 
-	body {
-	background-image: url("images/SMWpCenterPinch.png");
-	}
-	
-</style>
+	<title>Login Page</title>
+	<link rel="stylesheet" href="styles.css">
+	<style>
+		
+		body {
+		background-image: url("images/SMWpCenterPinch.png");
+		}
+		
+	</style>
 </head>
 <body>
 <form action="" method="POST" onSubmit="return revalidate()">
