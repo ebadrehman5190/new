@@ -8,18 +8,25 @@ include('session1.php');
     <title>Payment</title>
 </head>
 <body>
+        <script src="http://localhost/php/newtask/payment_validation.js"></script>
+
+<?php 
+$data['date']=$data['members']=$data['items']=$data['paid']=$data['amount']=$data['per_head']=""; 
+?>
+    
     <a href="Entry.php">Home</a>    
     
-<form method="POST" action="">  
+<form method="POST" action="" onSubmit="return validate()">  
     <fieldset style="width:30%;">
          <legend><h3>payment screen</h3></legend> 
     
-    
-Date:<input type="date" name="date" id="date"><br><br>
+Date:<input type="date" name="date" id="date">
+            <span id="var_date" style="color:red;"></span>
+<br><br>
 
 Member:
-    <select name="member" id="member">
-                <option>select member</option>
+    <select name="member" id="mSelect">
+                <option></option>
     <?php
                 $conn = mysqli_connect('localhost','root','','test');
                 mysqli_select_db($conn,"test");
@@ -31,12 +38,16 @@ Member:
     ?>
                 <option><?php echo $row["User"] ; } ?></option>  
     </select>
+    <span id="var_mSelect" style="color:red;"></span>
 <br><br>
+
 <input type="submit" value="search">
 </fieldset>
 </form>    
 
 <?php
+    if($_POST){
+                    
     $conn = mysqli_connect('localhost','root','','test');
     mysqli_select_db($conn,"test");
 				
@@ -44,6 +55,7 @@ Member:
                 
     $amount = mysqli_query($conn, $fetch);
     $data = mysqli_fetch_array($amount);
+    }
 ?>
 
 <br>

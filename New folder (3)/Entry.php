@@ -27,7 +27,7 @@ include('session1.php');
 
 </head>        
     <body>         
-    <script src="http://localhost/php/newtask/java_validation.js"></script>
+    <script src="http://localhost/php/newtask/entry_validation.js"></script>
         
         
 <div class="menu">
@@ -87,14 +87,14 @@ function test_input($data) {
         Date:
         <div class="align">
             <input type="date" name="date" id="date">
-            <span id="var_date" style="color:red;"><?php echo $dateErr;?></span>
             </div>
+            <span id="var_date" style="color:red;"><?php echo $dateErr;?></span>
 
         <br>
 
         Members:
         <div class="align">
-                    <select multiple="multiple" name="member[]" id="mSelect" size="3" style="width:120px;">
+                    <select multiple="multiple" name="member[]" id="mSelect" size="3" style="width:150px;">
                             <?php
                         
                                 $conn = mysqli_connect('localhost','root','','test');
@@ -132,7 +132,7 @@ function test_input($data) {
 
         Paid money:
         <div class="align">
-            <select name="paid" id="paid">
+            <select name="paid" id="paid" style="width:150px;">
                 <option></option>
                 <?php
                         $conn = mysqli_connect('localhost','root','','test');

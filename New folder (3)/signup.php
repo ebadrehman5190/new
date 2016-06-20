@@ -8,76 +8,53 @@ Sign up form
 
 </head>
 <body>
-    
-<script type="text/javascript">
-function revalidate()
-{
-	
-	var validate= true;
-	var str=document.getElementById("email").value;
-	var alpha=document.getElementById("fullname").value;
-	var letters = /^[A-Za-z]+$/;  
-	var filter=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-	
-			if(document.getElementById("cpwd").value == ""){
-				document.getElementById("var_cpwd").innerHTML="please enter the Confirm Password";
-				validate = false;
-			}else if(document.getElementById("pwd").value != document.getElementById("cpwd").value){
-				document.getElementById("var_cpwd").innerHTML="Password must be same";
-				validate = false;
-			}else{
-				document.getElementById("var_cpwd").innerHTML="";
-			}
-			
-			if(validate == false){
-				return(false);
-			}else{
-				return(true);
-			}
-}		
-		
-</script>
+    <script src="http://localhost/php/newtask/signup_validation.js"></script>
 
-			
-	
 <?php    
 $user=$fullname=$email=$pwd=$country=$birthday=$gender=$admin=$message="";
 ?>    
 
 <a href="login1.php">Back</a>    
-    <form name="Registration" class="form_title" action="" method="POST" onSubmit="return revalidate()">
+    <form name="Registration" class="form_title" action="" method="POST" onSubmit="return validation()">
 	<fieldset class="field_set">
 	<legend><h1>Sign up form</h1></legend>
 		<table>
 			<tr>
                 <td>Username:</td>
                 <td><input type="text" name="user" id="user"></td>
+				<td><span id="var_user" style="color:red;"></span></td>
             </tr>
             <tr>
                 <td>FullName:</td>
                 <td><input type="text" name="name" id="name"></td>
+				<td><span id="var_name" style="color:red;"></span></td>
             </tr>
              <tr>
                 <td>Email:</td>
                 <td><input type="email" name="email" id="email"></td>
+				<td><span id="var_email" style="color:red;"></span></td>
             </tr>
             <tr>
                 <td>Password:</td>
                 <td><input type="password" name="password" id="password"></td>
+				<td><span id="var_password" style="color:red;"></span></td>
             </tr>
             <tr>
                 <td>ConfirmPassword:</td>
                 <td><input type="password" name="cpassword" id="cpassword"></td>
+				<td><span id="var_cpassword" style="color:red;"></span></td>
             </tr>
             <tr>
                 <td>Gender:</td>
                 <td><input type="radio" name="gender" id="gender" value="Male">Male
                     <input type="radio" name="gender" id="gender1" value="Female">Female</td>
+				<td><span id="var_gender" style="color:red;"></span></td>	
             </tr>
             <tr>
 				<td>Admin type:</td>
 				<td><input type="radio" name="admin" id="admin" value="Admin">Admin
 					<input type="radio" name="admin" id="admin2" value="User">User</td>
+				<td><span id="var_admin" style="color:red;"></span></td>	
 			</tr>
             <tr>
 				<td><input type="submit" value="submit" ></td>
